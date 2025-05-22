@@ -4,12 +4,12 @@ import { Button, Flex, Separator, Table, Theme } from "@radix-ui/themes";
 import { getLeads } from "./services/db/leads";
 import { Filter } from "./components/Filter";
 import { Sort } from "./components/Sort";
-import type { sortOptions } from "./types";
+import type { Lead, sortOptions } from "./types";
 
 import "./App.scss";
 
 function App() {
-  const [data, setData] = useState<object[]>([]);
+  const [data, setData] = useState<Lead[]>([]);
   const [pagination, setPagination] = useState({
     page: 0,
     size: 10,
@@ -87,7 +87,7 @@ function App() {
           </Table.Header>
 
           <Table.Body>
-            {data.map((datum) => (
+            {data.map((datum: Lead) => (
               <Table.Row key={datum.lead_id}>
                 <Table.RowHeaderCell>{datum.lead_name}</Table.RowHeaderCell>
                 <Table.Cell>{datum.contact_information}</Table.Cell>

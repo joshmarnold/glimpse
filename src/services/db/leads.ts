@@ -1,4 +1,4 @@
-import type { GetLeadsParams } from "@/types";
+import type { GetLeadsParams, Lead } from "@/types";
 import supabase from "@lib/createClient.ts";
 
 export async function getLeads({
@@ -6,7 +6,7 @@ export async function getLeads({
   sortOptions,
   filterOptions,
 }: GetLeadsParams): Promise<{
-  data: object[];
+  data: Lead[];
   count: number | null;
   error: object | null;
 }> {

@@ -1,10 +1,17 @@
+import type { filterOptions } from "@/types";
 import { Flex, Select, TextField } from "@radix-ui/themes";
 
-export const Filter = ({ filterOptions, setFilterOptions }: any) => {
-  const handleFilterValueChange = (e) => {
+export const Filter = ({
+  filterOptions,
+  setFilterOptions,
+}: {
+  filterOptions: filterOptions;
+  setFilterOptions: React.Dispatch<React.SetStateAction<filterOptions>>;
+}) => {
+  const handleFilterValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
 
-    setFilterOptions((prev: any) => {
+    setFilterOptions((prev: filterOptions) => {
       return {
         ...prev,
         value,
@@ -12,8 +19,8 @@ export const Filter = ({ filterOptions, setFilterOptions }: any) => {
     });
   };
 
-  const handleValueChange = (columnName) => {
-    setFilterOptions((prev: any) => {
+  const handleValueChange = (columnName: string) => {
+    setFilterOptions((prev: filterOptions) => {
       return {
         ...prev,
         columnName,

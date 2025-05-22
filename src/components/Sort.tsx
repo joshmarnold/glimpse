@@ -1,7 +1,14 @@
+import type { sortOptions } from "@/types";
 import { Flex, Select } from "@radix-ui/themes";
 
-export const Sort = ({ sortOptions, setSortOptions }) => {
-  const handleSortColumnChange = (columnName) => {
+export const Sort = ({
+  sortOptions,
+  setSortOptions,
+}: {
+  sortOptions: sortOptions;
+  setSortOptions: React.Dispatch<React.SetStateAction<sortOptions>>;
+}) => {
+  const handleSortColumnChange = (columnName: string) => {
     console.log(columnName);
     setSortOptions((prev) => ({
       columnName,
