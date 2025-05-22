@@ -6,3 +6,20 @@ export interface ConsumerBrand {
   deductions?: number;
   last_reviewed?: string; // ISO date string
 }
+
+export type sortOptions = {
+  columnName: string;
+  direction: "asc" | "desc";
+};
+
+export type GetLeadsParams = {
+  pagination: {
+    page: number;
+    size: number;
+  };
+  sortOptions: sortOptions;
+  filterOptions: {
+    columnName: string;
+    value: string;
+  };
+};
