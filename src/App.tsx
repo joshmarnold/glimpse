@@ -87,13 +87,13 @@ function App() {
           <Filter
             filterOptions={filterOptions}
             setFilterOptions={setFilterOptions}
-            disabled={totalCount === 0}
+            disabled={false}
           />
           <Separator orientation="vertical" />
           <Sort
             sortOptions={sortOptions}
             setSortOptions={setSortOptions}
-            disabled={totalCount === 0}
+            disabled={false}
           />
         </Flex>
 
