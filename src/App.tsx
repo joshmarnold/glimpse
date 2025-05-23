@@ -72,6 +72,7 @@ function App() {
         gap={"4"}
       >
         <Button
+          color="red"
           onClick={handleLogout}
           style={{ marginLeft: "auto", marginBottom: "16px" }}
         >
