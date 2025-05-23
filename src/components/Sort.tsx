@@ -4,9 +4,11 @@ import { Flex, Select } from "@radix-ui/themes";
 export const Sort = ({
   sortOptions,
   setSortOptions,
+  disabled = false,
 }: {
   sortOptions: sortOptions;
   setSortOptions: React.Dispatch<React.SetStateAction<sortOptions>>;
+  disabled?: boolean;
 }) => {
   const handleSortColumnChange = (columnName: string) => {
     console.log(columnName);
@@ -25,6 +27,7 @@ export const Sort = ({
         value={sortOptions.columnName}
         // unfortunately, clicking twice doesn't trigger so can't change direction
         onValueChange={handleSortColumnChange}
+        disabled={disabled}
       >
         <Select.Trigger placeholder="Sort By" />
         <Select.Content>

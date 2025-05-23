@@ -4,9 +4,11 @@ import { Flex, Select, TextField } from "@radix-ui/themes";
 export const Filter = ({
   filterOptions,
   setFilterOptions,
+  disabled = false,
 }: {
   filterOptions: filterOptions;
   setFilterOptions: React.Dispatch<React.SetStateAction<filterOptions>>;
+  disabled?: boolean;
 }) => {
   const handleFilterValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -34,8 +36,9 @@ export const Filter = ({
         placeholder="filter"
         value={filterOptions.value}
         onChange={handleFilterValueChange}
+        disabled={disabled}
       />
-      <Select.Root onValueChange={handleValueChange}>
+      <Select.Root onValueChange={handleValueChange} disabled={disabled}>
         <Select.Trigger placeholder="Column" />
         <Select.Content>
           <Select.Item value="lead_name">Lead Name</Select.Item>

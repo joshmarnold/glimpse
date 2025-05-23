@@ -7,6 +7,7 @@ import { Sort } from "./components/Sort";
 import type { Lead, sortOptions } from "./types";
 
 import "./App.scss";
+import { CSVUpload } from "./components/CSVUpload";
 
 function App() {
   const [data, setData] = useState<Lead[]>([]);
@@ -58,16 +59,23 @@ function App() {
         direction={"column"}
         maxWidth={"800px"}
         mx={"auto"}
-        pt="5git branch -M main0px"
+        pt="24px"
         mb="4px"
+        gap={"4"}
       >
+        <CSVUpload setData={setData} setTotalCount={setTotalCount} />
         <Flex gap="12px" align={"center"}>
           <Filter
             filterOptions={filterOptions}
             setFilterOptions={setFilterOptions}
+            disabled={data.length === 0}
           />
           <Separator orientation="vertical" />
-          <Sort sortOptions={sortOptions} setSortOptions={setSortOptions} />
+          <Sort
+            sortOptions={sortOptions}
+            setSortOptions={setSortOptions}
+            disabled={data.length === 0}
+          />
         </Flex>
 
         <Table.Root>
@@ -100,18 +108,20 @@ function App() {
           </Table.Body>
         </Table.Root>
 
-        <Flex justify="center" gap="4" mt="4">
-          <Button onClick={handlePrevPage} disabled={pagination.page === 0}>
-            Prev
-          </Button>
-          {pagination.page + 1}
-          <Button
-            onClick={handleNextPage}
-            disabled={(pagination.page + 1) * pagination.size >= totalCount}
-          >
-            Next
-          </Button>
-        </Flex>
+        {totalCount > pagination.size && (
+          <Flex justify="center" gap="4" mt="4">
+            <Button onClick={handlePrevPage} disabled={pagination.page === 0}>
+              Prev
+            </Button>
+            {pagination.page + 1}
+            <Button
+              onClick={handleNextPage}
+              disabled={(pagination.page + 1) * pagination.size >= totalCount}
+            >
+              Next
+            </Button>
+          </Flex>
+        )}
       </Flex>
     </Theme>
   );

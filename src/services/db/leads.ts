@@ -36,3 +36,36 @@ export async function getLeads({
 
   return { data, count, error: null };
 }
+
+export async function uploadLeadsCSV(file: File): Promise<{
+  success: boolean;
+  error?: string;
+  data?: Lead[];
+}> {
+  try {
+    const text = await file.text();
+    const rows = parseCSV(text) as Lead[];
+
+    const { error } = await supabase.from("leads").insert(rows);
+
+    if (error) {
+      console.error("Insert error:", error.message);
+      return { success: false, error: error.message };
+    }
+
+    return { success: true, data: rows };
+  } catch (err) {
+    console.error("Upload failed:", err);
+    return { success: false, error: String(err) };
+  }
+}
+
+function parseCSV(csvText: string): Record<string, string>[] {
+  const [headerLine, ...lines] = csvText.trim().split("\n");
+  const headers = headerLine.split(",").map((h) => h.trim());
+
+  return lines.map((line) => {
+    const values = line.split(",").map((v) => v.trim());
+    return Object.fromEntries(headers.map((h, i) => [h, values[i]]));
+  });
+}
