@@ -8,6 +8,7 @@ import type { Lead, sortOptions } from "./types";
 
 import "./App.scss";
 import { CSVUpload } from "./components/CSVUpload";
+import supabase from "./lib/createClient";
 
 function App() {
   const [data, setData] = useState<Lead[]>([]);
@@ -53,6 +54,13 @@ function App() {
     }));
   };
 
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("Error signing out:", error);
+    }
+  };
+
   return (
     <Theme appearance="dark">
       <Flex
@@ -63,6 +71,12 @@ function App() {
         mb="4px"
         gap={"4"}
       >
+        <Button
+          onClick={handleLogout}
+          style={{ marginLeft: "auto", marginBottom: "16px" }}
+        >
+          Sign Out
+        </Button>
         <CSVUpload
           setData={setData}
           setTotalCount={setTotalCount}
