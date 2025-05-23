@@ -32,6 +32,7 @@ export default function Auth() {
           appearance={{ theme: ThemeSupa }}
           providers={[]}
           onlyThirdPartyProviders={false}
+          theme="dark"
         />
       </div>
     );
