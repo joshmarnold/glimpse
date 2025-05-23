@@ -1,14 +1,20 @@
-import { uploadLeadsCSV } from "@/services/db/leads";
+import { deleteAllLeads, uploadLeadsCSV } from "@/services/db/leads";
 import type { Lead } from "@/types";
 import { Button, Flex } from "@radix-ui/themes";
 import { useRef, useState } from "react";
 
-export function CSVUpload({ setData, setTotalCount }: {
-    setData: (data: Lead[]) => void;
-    setTotalCount: (count: number) => void;
+export function CSVUpload({
+  setData,
+  setTotalCount,
+  totalCount,
+}: {
+  totalCount: number;
+  setData: (data: Lead[]) => void;
+  setTotalCount: (count: number) => void;
 }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [fileName, setFileName] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState(false);
 
   const handleClick = () => {
     fileInputRef.current?.click();
@@ -36,6 +42,14 @@ export function CSVUpload({ setData, setTotalCount }: {
     setFileName(null);
   };
 
+  const handleDeleteAll = async () => {
+    setDeleting(true);
+    await deleteAllLeads();
+    setDeleting(false);
+    setData([]);
+    setTotalCount(0);
+  };
+
   return (
     <Flex gap="1" align="center">
       <input
@@ -45,9 +59,19 @@ export function CSVUpload({ setData, setTotalCount }: {
         onChange={handleChange}
         style={{ display: "none" }}
       />
-      <Button onClick={handleClick}>Upload CSV</Button>
+      {totalCount === 0 && <Button onClick={handleClick}>Upload CSV</Button>}
       {fileName && (
         <span className="text-sm text-muted-foreground">{fileName}</span>
+      )}
+      {totalCount > 0 && (
+        <Button
+          color="red"
+          onClick={handleDeleteAll}
+          loading={deleting}
+          disabled={deleting}
+        >
+          {deleting ? "Deleting..." : "Delete All"}
+        </Button>
       )}
     </Flex>
   );

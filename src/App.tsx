@@ -63,7 +63,11 @@ function App() {
         mb="4px"
         gap={"4"}
       >
-        <CSVUpload setData={setData} setTotalCount={setTotalCount} />
+        <CSVUpload
+          setData={setData}
+          setTotalCount={setTotalCount}
+          totalCount={totalCount}
+        />
         <Flex gap="12px" align={"center"}>
           <Filter
             filterOptions={filterOptions}

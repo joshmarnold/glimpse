@@ -69,3 +69,17 @@ function parseCSV(csvText: string): Record<string, string>[] {
     return Object.fromEntries(headers.map((h, i) => [h, values[i]]));
   });
 }
+
+export async function deleteAllLeads(): Promise<{
+  success: boolean;
+  error?: string;
+}> {
+  const { error } = await supabase.from("leads").delete().neq("id", 2000); // deletes all rows
+
+  if (error) {
+    console.error("Delete error:", error.message);
+    return { success: false, error: error.message };
+  }
+
+  return { success: true };
+}
