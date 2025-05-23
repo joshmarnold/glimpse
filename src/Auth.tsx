@@ -6,7 +6,6 @@ import { ThemeSupa } from "@supabase/auth-ui-shared";
 
 import supabase from "./lib/createClient";
 import App from "./App";
-import { Flex } from "@radix-ui/themes";
 
 export default function Auth() {
   const [session, setSession] = useState<Session | null>(null);
